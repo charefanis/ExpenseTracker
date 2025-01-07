@@ -26,7 +26,6 @@ document.getElementById('mySubmit').onclick = function() {
         deleteErrorButton.classList.add('error-delete-btn');
         deleteErrorButton.onclick = function() {
             row.remove(); // Remove the error row when delete button is clicked
-            checkDefaultRow();
         };
 
         // Append the delete button to the message div
@@ -57,7 +56,19 @@ document.getElementById('mySubmit').onclick = function() {
         return; // Exit the function if the user didn't enter anything
     }
 
-    // Create new table row (if fields are filled)
+    // Create a new expense object
+    var expense = {
+        name: name,
+        date: date,
+        amount: amount
+    };
+
+    // Save the expense to localStorage
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    expenses.push(expense);
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+
+    // Create new table row for the expense
     var row = document.createElement('tr');
     var nameTd = document.createElement('td');
     var dateTd = document.createElement('td');
@@ -75,6 +86,7 @@ document.getElementById('mySubmit').onclick = function() {
     deleteButton.textContent = "x";
     deleteButton.onclick = function() {
         row.remove(); // Remove the row when delete button is clicked
+        deleteExpense(expense); // Remove from localStorage
         checkDefaultRow(); // Check if we need to show the default row after deletion
     };
 
@@ -87,8 +99,8 @@ document.getElementById('mySubmit').onclick = function() {
     // Append cells to the row
     row.appendChild(nameTd);
     row.appendChild(dateTd);
-    row.appendChild(amountTd).appendChild(deleteTd); // Add delete cell
-    
+    row.appendChild(amountTd);
+    row.appendChild(deleteTd); // Add delete cell
 
     // Get tbody and add the row
     var tbody = document.getElementById('myTd').querySelector('tbody');
@@ -110,13 +122,88 @@ document.getElementById('mySubmit').onclick = function() {
     checkDefaultRow();
 };
 
+// Function to delete an expense from localStorage
+function deleteExpense(expenseToDelete) {
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    expenses = expenses.filter(expense => expense.name !== expenseToDelete.name || expense.date !== expenseToDelete.date || expense.amount !== expenseToDelete.amount);
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+}
+
 // Function to check if we need to insert the default row
 function checkDefaultRow() {
     var tbody = document.getElementById('myTd').querySelector('tbody');
-    if (tbody.children.length === 0) {
+    var expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+    // If there are no expenses, show the default row
+    if (expenses.length === 0) {
+        // Remove any existing default row before adding the new one
+        var existingDefaultRow = document.getElementById('defaultTd');
+        if (existingDefaultRow) {
+            existingDefaultRow.remove();
+        }
+
         var newDefaultRow = document.createElement('tr');
         newDefaultRow.id = 'defaultTd';
         newDefaultRow.innerHTML = '<td class="default-td" colspan="4">No expense added yet!</td>';
         tbody.appendChild(newDefaultRow);
     }
+}
+
+// Function to load expenses from localStorage
+function loadExpenses() {
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+    // If there are expenses, display them
+    var tbody = document.getElementById('myTd').querySelector('tbody');
+
+    // Remove the default row if it exists
+    var defaultRow = document.getElementById('defaultTd');
+    if (defaultRow) {
+        defaultRow.remove();
+    }
+
+    expenses.forEach(expense => {
+        var row = document.createElement('tr');
+        var nameTd = document.createElement('td');
+        var dateTd = document.createElement('td');
+        var amountTd = document.createElement('td');
+        var deleteTd = document.createElement('td'); // Separate cell for delete button
+        var deleteButton = document.createElement('button');
+
+        // Set cell content
+        nameTd.textContent = expense.name;
+        dateTd.textContent = expense.date;
+        amountTd.textContent = `${expense.amount} $`;
+
+        // Set up the delete button
+        deleteButton.id = "myDelete";
+        deleteButton.textContent = "x";
+        deleteButton.onclick = function() {
+            row.remove(); // Remove the row when delete button is clicked
+            deleteExpense(expense); // Remove from localStorage
+            checkDefaultRow(); // Check if we need to show the default row after deletion
+        };
+
+        // Append the delete button to the deleteTd cell
+        deleteTd.appendChild(deleteButton);
+
+        // Add class for amountTd to align the content with flexbox
+        amountTd.classList.add("amount-td");
+
+        // Append cells to the row
+        row.appendChild(nameTd);
+        row.appendChild(dateTd);
+        row.appendChild(amountTd);
+        row.appendChild(deleteTd); // Add delete cell
+
+        tbody.appendChild(row);
+    });
+
+    // If no expenses are found, show the default row
+    checkDefaultRow();
+}
+
+// Call loadExpenses() when the page is loaded
+window.onload = function() {
+    loadExpenses();
 }
