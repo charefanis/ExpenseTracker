@@ -99,8 +99,7 @@ document.getElementById('mySubmit').onclick = function() {
     // Append cells to the row
     row.appendChild(nameTd);
     row.appendChild(dateTd);
-    row.appendChild(amountTd);
-    row.appendChild(deleteTd); // Add delete cell
+    row.appendChild(amountTd).appendChild(deleteTd); // Add delete cell
 
     // Get tbody and add the row
     var tbody = document.getElementById('myTd').querySelector('tbody');
