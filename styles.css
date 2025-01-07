@@ -56,26 +56,25 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0;
     transition: background-color 0.3s, transform 0.2s ease-in-out;
 }
 #myDelete:hover{
     background-color: rgb(68, 194, 68);
-    transform: scale(1.1);
+    transform: scale(1.1) ;
     border: none;
     color: white;
+    transform: translate(0, 0);
 }
 .error-message-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 20px;
 }
 .error-delete-btn {
-    background-color: red;
-    color: white;
-    border: none;
+    border: solid 2px #999;
     font-weight: bold;
-    padding: 5px;
-    margin-left: 10px;
     cursor: pointer;
     border-radius: 5px;
     height: 20px;
@@ -83,9 +82,14 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
 }
 .error-delete-btn:hover {
-    background-color: darkred;
+    background-color: red;
+    transform: scale(1.1) ;
+    border: none;
+    color: white;
+    transform: translate(0, 0);
 }
 .error-td {
     background-color: #f8d7da; /* Light red background */
@@ -113,7 +117,6 @@ table th {
 }
 table tr {
     height: 30px;
-    border: 1px solid #ccc;
 }
 table td {
     padding: 15px;
@@ -131,10 +134,8 @@ table td {
     justify-content: space-between;
     align-items: center;
 }
-.error-td {
-    background-color: #f8d7da; /* Light red background */
-    color: #721c24; /* Dark red text */
-    font-style: italic;
-    text-align: center;
-    padding: 10px;
+.newRow{
+    padding: 12px;
+    font-weight: bold;
+    border: 1px solid #ccc;
 }

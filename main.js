@@ -26,6 +26,7 @@ document.getElementById('mySubmit').onclick = function() {
         deleteErrorButton.classList.add('error-delete-btn');
         deleteErrorButton.onclick = function() {
             row.remove(); // Remove the error row when delete button is clicked
+            checkDefaultRow(); // Check if the default message needs to come back
         };
 
         // Append the delete button to the message div
@@ -75,6 +76,8 @@ document.getElementById('mySubmit').onclick = function() {
     var amountTd = document.createElement('td');
     var deleteTd = document.createElement('td'); // Separate cell for delete button
     var deleteButton = document.createElement('button');
+    nameTd.classList.add('newRow');
+    dateTd.classList.add('newRow');
 
     // Set cell content
     nameTd.textContent = name;
@@ -128,13 +131,15 @@ function deleteExpense(expenseToDelete) {
     localStorage.setItem('expenses', JSON.stringify(expenses));
 }
 
-// Function to check if we need to insert the default row
 function checkDefaultRow() {
     var tbody = document.getElementById('myTd').querySelector('tbody');
     var expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 
-    // If there are no expenses, show the default row
-    if (expenses.length === 0) {
+    // Check if there are any error rows present
+    var errorRowExists = !!tbody.querySelector('.error-td');
+
+    // If there are no expenses and no error messages, show the default row
+    if (expenses.length === 0 && !errorRowExists) {
         // Remove any existing default row before adding the new one
         var existingDefaultRow = document.getElementById('defaultTd');
         if (existingDefaultRow) {
@@ -145,8 +150,15 @@ function checkDefaultRow() {
         newDefaultRow.id = 'defaultTd';
         newDefaultRow.innerHTML = '<td class="default-td" colspan="4">No expense added yet!</td>';
         tbody.appendChild(newDefaultRow);
+    } else {
+        // If there are expenses or an error row, remove the default row if it exists
+        var defaultRow = document.getElementById('defaultTd');
+        if (defaultRow) {
+            defaultRow.remove();
+        }
     }
 }
+
 
 // Function to load expenses from localStorage
 function loadExpenses() {
