@@ -1,0 +1,140 @@
+body{
+    font-family: "Roboto";
+    font-weight: bold;
+}
+.section1{
+    text-align: center;
+}
+label{
+    font-size: 1.1em;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+input {
+    width: 70%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, background-color 0.3s; 
+}
+input:focus {
+    border-color: green;
+    background-color: #fff;
+    outline: none;
+}
+#mySubmit{
+    background-color: rgb(68, 194, 68);
+    border: none;
+    border-radius: 5px;
+    height: 38px;
+    width: 120px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background-color 0.4s;
+}
+#mySubmit:hover{
+    background-color: green;
+}
+#myDelete{
+    border-radius: 5px;
+    height: 20px;
+    width: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: solid 2px #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+#myDelete:hover{
+    background-color: rgb(68, 194, 68);
+    transform: scale(1.1);
+    border: none;
+    color: white;
+}
+.error-message-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.error-delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.error-delete-btn:hover {
+    background-color: darkred;
+}
+.error-td {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+}
+.table{
+    display: flex;
+    justify-content: center;
+}
+table{
+    border-collapse: collapse;
+    margin: 25px;
+    font-size: 0.9em;
+    width: 70%;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+table th {
+    padding: 12px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+}
+table tr {
+    height: 30px;
+    border: 1px solid #ccc;
+}
+table td {
+    padding: 15px;
+    background-color: #f9f9f9;
+    font-size: 1em;
+}
+#defaultTd{
+    background-color: #f3f3f3;
+    border: none;
+    font-style: italic;
+    color: #999;
+}
+.amount-td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.error-td {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+}
